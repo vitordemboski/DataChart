@@ -1,21 +1,33 @@
-import { StatusBar } from 'expo-status-bar';
+/* eslint-disable camelcase */
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import {
+  useFonts,
+  ZillaSlab_300Light,
+  ZillaSlab_300Light_Italic,
+  ZillaSlab_400Regular,
+  ZillaSlab_400Regular_Italic,
+  ZillaSlab_500Medium,
+  ZillaSlab_500Medium_Italic,
+  ZillaSlab_600SemiBold,
+  ZillaSlab_600SemiBold_Italic,
+  ZillaSlab_700Bold,
+  ZillaSlab_700Bold_Italic
+} from '@expo-google-fonts/zilla-slab';
+import AppContainer from './src/router';
 
 export default function App() {
-  return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
-  );
-}
+  useFonts({
+    ZillaSlab_300Light,
+    ZillaSlab_300Light_Italic,
+    ZillaSlab_400Regular,
+    ZillaSlab_400Regular_Italic,
+    ZillaSlab_500Medium,
+    ZillaSlab_500Medium_Italic,
+    ZillaSlab_600SemiBold,
+    ZillaSlab_600SemiBold_Italic,
+    ZillaSlab_700Bold,
+    ZillaSlab_700Bold_Italic
+  });
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+  return <AppContainer />;
+}
