@@ -1,21 +1,28 @@
 import * as React from 'react';
-import { View, Image, ImageBackground } from 'react-native';
+import { View, ImageBackground, SafeAreaView } from 'react-native';
 import Background from '@assets/background.png';
-import Logo from '@assets/logo.png';
+import Logo from '@components/atoms/logo';
+import Button from '@components/atoms/button';
+import styles from './style';
 
-export default function Welcome() {
+export default function Welcome({ navigation }) {
+  const goToSignIn = () => {
+    navigation.navigate('SignIn');
+  };
+
+  const goToSignUp = () => {
+    navigation.navigate('SignUp');
+  };
+
   return (
-    <ImageBackground resizeMode="stretch" style={{ flex: 1 }} source={Background}>
-      <View
-        style={{
-          flex: 1,
-          alignItems: 'center',
-          justifyContent: 'center',
-          backgroundColor: '#4B7CBF80'
-        }}
-      >
-        <Image style={{ width: 280, height: 114 }} source={Logo} />
-      </View>
+    <ImageBackground resizeMode="stretch" style={styles.wrapper} source={Background}>
+      <SafeAreaView style={styles.container}>
+        <Logo style={styles.logo} />
+        <View style={styles.buttons}>
+          <Button onPress={goToSignUp} style={styles.button} scheme="outline" text="CADASTRE-SE" />
+          <Button onPress={goToSignIn} style={styles.button} scheme="white" text="LOGAR" />
+        </View>
+      </SafeAreaView>
     </ImageBackground>
   );
 }

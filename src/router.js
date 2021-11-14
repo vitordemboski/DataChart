@@ -4,6 +4,8 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import Home from '@components/pages/home';
 import Auth from '@components/pages/auth';
 import Welcome from '@components/pages/welcome';
+import SignIn from '@components/pages/signin';
+import SignUp from '@components/pages/signup';
 
 const Stack = createNativeStackNavigator();
 
@@ -14,6 +16,8 @@ export default function Router() {
         <Stack.Screen name="Auth" component={Auth} />
         <Stack.Screen name="Home" component={Home} />
         <Stack.Screen name="Welcome" component={Welcome} />
+        <Stack.Screen name="SignIn" component={SignIn} />
+        <Stack.Screen name="SignUp" component={SignUp} />
       </Stack.Navigator>
     </NavigationContainer>
   );
