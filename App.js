@@ -1,5 +1,5 @@
 /* eslint-disable camelcase */
-import React from 'react';
+import React, { useEffect } from 'react';
 import {
   useFonts,
   ZillaSlab_300Light,
@@ -13,10 +13,12 @@ import {
   ZillaSlab_700Bold,
   ZillaSlab_700Bold_Italic
 } from '@expo-google-fonts/zilla-slab';
+import { configureFontWeight } from '@modules/utils';
+import AppLoading from 'expo-app-loading';
 import AppContainer from './src/router';
 
-export default function App() {
-  useFonts({
+function App() {
+  const [fontsLoaded] = useFonts({
     ZillaSlab_300Light,
     ZillaSlab_300Light_Italic,
     ZillaSlab_400Regular,
@@ -29,5 +31,16 @@ export default function App() {
     ZillaSlab_700Bold_Italic
   });
 
+  useEffect(() => {
+    if (fontsLoaded) {
+      configureFontWeight();
+    }
+  }, [fontsLoaded]);
+
+  if (!fontsLoaded) {
+    return <AppLoading />;
+  }
   return <AppContainer />;
 }
+
+export default App;
