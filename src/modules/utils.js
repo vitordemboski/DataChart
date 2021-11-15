@@ -4,6 +4,19 @@ import { Platform, Text } from 'react-native';
 export const isiOS = Platform.OS === 'ios';
 export const isAndroid = Platform.OS === 'android';
 
+export const getDescriptionGraphic = (tipo) => {
+  switch (tipo) {
+    case 0:
+      return 'Linha';
+    case 2:
+      return 'Barra';
+    case 4:
+      return 'Pizza';
+    default:
+      return 'Linha';
+  }
+};
+
 export const configureFontWeight = () => {
   const oldRender = Text.render;
 
