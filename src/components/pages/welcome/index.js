@@ -19,8 +19,8 @@ export default function Welcome({ navigation }) {
       <SafeAreaView style={styles.container}>
         <Logo style={styles.logo} />
         <View style={styles.buttons}>
-          <Button onPress={goToSignUp} style={styles.button} scheme="outline" text="CADASTRE-SE" />
-          <Button onPress={goToSignIn} style={styles.button} scheme="white" text="LOGAR" />
+          <Button onClick={goToSignUp} style={styles.button} scheme="outline" text="CADASTRE-SE" />
+          <Button onClick={goToSignIn} style={styles.button} scheme="white" text="LOGAR" />
         </View>
       </SafeAreaView>
     </ImageBackground>

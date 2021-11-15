@@ -3,7 +3,7 @@ module.exports = {
   parser: 'babel-eslint',
   env: {
     jest: true,
-    browser: true,
+    browser: true
   },
   rules: {
     'no-use-before-define': 'off',
@@ -12,7 +12,8 @@ module.exports = {
     'comma-dangle': 'off',
     'react/destructuring-assignment': 'off',
     'import/no-cycle': 'off',
-    'class-methods-use-this': 'off'
+    'class-methods-use-this': 'off',
+    'linebreak-style': 0
   },
   globals: {
     fetch: false,
@@ -21,7 +22,7 @@ module.exports = {
   settings: {
     'import/resolver': {
       'babel-module': {},
-      'babel-plugin-root-import': {},
+      'babel-plugin-root-import': {}
     }
   }
 };

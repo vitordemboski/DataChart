@@ -27,8 +27,16 @@ export default StyleSheet.create({
     shadowOpacity: 0.2,
     shadowRadius: 1.41
   },
+  backgroundKeyboardOpen: {
+    height: 150,
+    top: -50
+  },
   image: {
     marginTop: isiOS ? 20 : 30
+  },
+  imageKeyboardOpen: {
+    height: 60,
+    width: 150
   },
   title: {
     fontSize: 25,

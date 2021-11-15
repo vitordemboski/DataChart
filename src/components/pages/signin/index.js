@@ -26,7 +26,7 @@ export default function SignIn({ navigation, route }) {
     try {
       const { data } = await UserService.signIn({ email, password });
       await Storage.setItem('user', data);
-      navigation.navigate('Auth');
+      navigation.navigate('Home');
     } catch (error) {
       console.log(error);
     }

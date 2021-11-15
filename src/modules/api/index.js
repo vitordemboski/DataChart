@@ -12,11 +12,14 @@ export default class Api {
   async initHeader() {
     const user = await Storage.getItem('user');
     if (user) {
-      axios.defaults.headers.post.Authorization = `Bearer ${user.token}`;
+      const token = `Bearer ${user.token}`;
+      axios.defaults.headers.post.Authorization = token;
+      axios.defaults.headers.get.Authorization = token;
     }
   }
 
   async get(path, options) {
+    this.initHeader();
     return axios.get(this.baseURL + path, options);
   }
 
@@ -25,7 +28,7 @@ export default class Api {
   }
 
   async post(path, data, options) {
-    console.log(this.baseURL + path);
+    this.initHeader();
     return axios.post(this.baseURL + path, data, options);
   }
 

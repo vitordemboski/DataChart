@@ -7,13 +7,13 @@ import Storage from '@modules/services/storage';
 const Auth = (props) => {
   useEffect(() => {
     const load = async () => {
-      const user = await Storage.getItem('user');
+      const userToken = await Storage.getItem('user');
 
-      const isUserLoggedIn = user;
+      const isUserLoggedIn = userToken;
 
       const { navigate } = props.navigation;
       if (isUserLoggedIn) {
-        navigate('Welcome');
+        navigate('Home');
       } else {
         navigate('Welcome');
       }

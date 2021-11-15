@@ -1,5 +1,6 @@
 import React from 'react';
 import { ActivityIndicator, Text, TouchableOpacity } from 'react-native';
+import { $white } from '@modules/colors';
 import styles from './style';
 
 const Button = ({
@@ -11,7 +12,7 @@ const Button = ({
     onPress={onClick}
   >
     {loading ? (
-      <ActivityIndicator />
+      <ActivityIndicator color={$white} />
     ) : (
       <Text style={[styles.text, styles[`${scheme}_text`]]}>{text.toUpperCase()}</Text>
     )}
