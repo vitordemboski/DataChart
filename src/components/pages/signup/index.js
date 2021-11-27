@@ -34,11 +34,12 @@ export default function SignUp({ navigation }) {
         firstName,
         lastName
       });
+      setLoading(false);
       navigation.navigate('SignIn', { email, password });
     } catch (error) {
+      setLoading(false);
       console.log(error);
     }
-    setLoading(false);
   };
 
   return (

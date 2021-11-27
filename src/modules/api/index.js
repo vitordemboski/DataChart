@@ -19,24 +19,12 @@ export default class Api {
   }
 
   async get(path, options) {
-    this.initHeader();
+    await this.initHeader();
     return axios.get(this.baseURL + path, options);
   }
 
-  async put(path, data, options) {
-    return axios.put(this.baseURL + path, data, options);
-  }
-
   async post(path, data, options) {
-    this.initHeader();
+    await this.initHeader();
     return axios.post(this.baseURL + path, data, options);
-  }
-
-  async delete(path, options) {
-    return axios.delete(this.baseURL + path, options);
-  }
-
-  async patch(path, data, options) {
-    return axios.patch(this.baseURL + path, data, options);
   }
 }

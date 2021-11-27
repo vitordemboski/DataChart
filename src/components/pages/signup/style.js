@@ -16,7 +16,7 @@ export default StyleSheet.create({
   },
   textLink: {
     color: $gray,
-    fontSize: 18
+    fontSize: 16
   },
   link: {
     marginLeft: 5

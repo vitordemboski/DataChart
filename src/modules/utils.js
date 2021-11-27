@@ -1,3 +1,4 @@
+/* eslint-disable no-bitwise */
 import React from 'react';
 import { Platform, Text } from 'react-native';
 
@@ -16,6 +17,12 @@ export const getDescriptionGraphic = (tipo) => {
       return 'Linha';
   }
 };
+export const getHexColorGraphic = color => `#${color || '000'}`;
+export const getHexToRgbColor = hex => hex
+  .replace(/^#?([a-f\d])([a-f\d])([a-f\d])$/i, (m, r, g, b) => `#${r}${r}${g}${g}${b}${b}`)
+  .substring(1)
+  .match(/.{2}/g)
+  .map(x => parseInt(x, 16));
 
 export const configureFontWeight = () => {
   const oldRender = Text.render;

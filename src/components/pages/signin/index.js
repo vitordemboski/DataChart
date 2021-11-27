@@ -26,11 +26,12 @@ export default function SignIn({ navigation, route }) {
     try {
       const { data } = await UserService.signIn({ email, password });
       await Storage.setItem('user', data);
+      setLoading(false);
       navigation.navigate('Home');
     } catch (error) {
+      setLoading(false);
       console.log(error);
     }
-    setLoading(false);
   };
 
   return (

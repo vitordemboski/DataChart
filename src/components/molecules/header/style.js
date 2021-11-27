@@ -10,7 +10,9 @@ export default StyleSheet.create({
     paddingHorizontal: 20,
     paddingVertical: 3,
     paddingTop: 20,
-    backgroundColor: $white,
+    backgroundColor: $white
+  },
+  shadow: {
     shadowColor: '#000',
     shadowOffset: {
       width: 0,
@@ -25,13 +27,20 @@ export default StyleSheet.create({
   },
   text: {
     color: $primaryColor,
-    fontSize: 18
+    fontSize: 18,
+    marginRight: 5
   },
   background: {
     backgroundColor: $white,
     position: 'absolute',
     top: -50,
     height: 50,
-    width: '100%'
+    width: '100%',
+    left: 0,
+    right: 0
+  },
+  buttonLogout: {
+    flexDirection: 'row',
+    alignItems: 'center'
   }
 });
