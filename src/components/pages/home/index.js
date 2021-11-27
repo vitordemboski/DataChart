@@ -85,7 +85,7 @@ export default function Home({ navigation }) {
         <Text numberOfLines={2} style={styles.title}>
           {activeGraphic?.titulo}
         </Text>
-        {activeGraphic && (
+        {activeGraphic.titulo && (
           <View style={styles.headerRight}>
             <ShareGraphic
               viewRef={graphicRef}
