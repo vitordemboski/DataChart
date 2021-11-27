@@ -1,12 +1,12 @@
 import React from 'react';
-import { SafeAreaView } from 'react-native';
+import { Platform, SafeAreaView, View } from 'react-native';
 import Header from '@components/molecules/header';
 
-const Page = ({ style, children }) => (
-  <SafeAreaView style={style}>
-    <Header />
-    {children}
-  </SafeAreaView>
+const Page = ({ style, children, isLogout }) => (
+  <View style={{ flex: 1, paddingTop: Platform.OS === 'ios' ? 20 : 0 }}>
+    <Header isLogout={isLogout} />
+    <SafeAreaView style={style}>{children}</SafeAreaView>
+  </View>
 );
 
 export default Page;

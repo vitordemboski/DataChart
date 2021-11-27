@@ -4,7 +4,7 @@ import { $primaryColor } from '@modules/colors';
 export default StyleSheet.create({
   text: {
     color: $primaryColor,
-    fontSize: 18,
+    fontSize: 16,
     textDecorationLine: 'underline'
   }
 });

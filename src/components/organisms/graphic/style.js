@@ -1,4 +1,5 @@
 import { StyleSheet } from 'react-native';
+import { $background } from '@modules/colors';
 
 export default StyleSheet.create({
   container: {
@@ -6,5 +7,10 @@ export default StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center'
   },
-  graphic: {}
+  graphic: {
+    backgroundColor: $background
+  },
+  wrapper: {
+    backgroundColor: $background
+  }
 });

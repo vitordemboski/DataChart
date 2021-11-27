@@ -33,5 +33,21 @@ export default StyleSheet.create({
     color: $white,
     fontSize: 12,
     maxWidth: '90%'
+  },
+  buttonClose: {
+    position: 'absolute',
+    height: 20,
+    width: 20,
+    alignItems: 'center',
+    justifyContent: 'center',
+    top: 1,
+    backgroundColor: 'red',
+    right: 1,
+    color: $white,
+    borderRadius: 50
+  },
+  textClose: {
+    color: $white,
+    transform: [{ translateY: -1 }]
   }
 });

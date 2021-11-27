@@ -6,6 +6,14 @@ class GraphicService extends Api {
     const user = await Storage.getItem('user');
     return this.get(`/graficos/getAll/${user.UserId}`);
   }
+
+  async saveGraphic(data) {
+    return this.post('/graficos/save', data);
+  }
+
+  async removeGraphic(data) {
+    return this.post('/graficos/delete', data);
+  }
 }
 
 export default new GraphicService();
