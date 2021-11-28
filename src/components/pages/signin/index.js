@@ -10,6 +10,7 @@ import UserService from '@modules/api/api-user';
 import Link from '@components/atoms/link';
 import styles from './style';
 import Storage from '../../../modules/services/storage';
+import { showMessageError } from '../../../modules/utils';
 
 export default function SignIn({ navigation, route }) {
   const [email, setEmail] = useState(route.params?.email);
@@ -21,16 +22,20 @@ export default function SignIn({ navigation, route }) {
   };
 
   const handleSubmit = async () => {
-    if (!email || !password) return;
+    if (!email || !password) {
+      showMessageError('Preencha os campos');
+      return;
+    }
     setLoading(true);
     try {
       const { data } = await UserService.signIn({ email, password });
       await Storage.setItem('user', data);
       setLoading(false);
       navigation.navigate('Home');
-    } catch (error) {
+    } catch (e) {
+      showMessageError('E-mail ou senha não encontrados');
       setLoading(false);
-      console.log(error);
+      console.log(e);
     }
   };
 

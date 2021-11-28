@@ -16,6 +16,8 @@ import Dropdown from '@components/molecules/dropdown';
 import InputTags from '@components/molecules/input-tags';
 
 import styles from './style';
+import { showMessageError } from '../../../modules/utils';
+import { $gray3A } from '../../../modules/colors';
 
 const items = [
   { label: 'Linha', value: 1 },
@@ -25,8 +27,10 @@ const items = [
 
 export default function GraphicPage({ navigation, route }) {
   const [graphic, setGraphic] = useState(
-    route.params ? route.params.activeGraphic : { tipoGrafico: 1 }
+    route.params.activeGraphic ? route.params.activeGraphic : { tipoGrafico: 1, cor: $gray3A }
   );
+
+  const onRefresh = route.params?.onRefresh;
 
   const onChangeGraphic = useCallback((state) => {
     setGraphic(lastState => ({
@@ -36,28 +40,37 @@ export default function GraphicPage({ navigation, route }) {
   }, []);
 
   const validGraphic = () => {
-    if (!graphic.titulo || !graphic.campos || !graphic.valores) {
+    if (
+      !graphic.titulo
+      || !graphic.campos
+      || !graphic.valores
+      || graphic.campos.split(',').length !== graphic.valores.split(',').length
+    ) {
       return false;
     }
     return true;
   };
 
   const handleSubmit = async () => {
-    if (!validGraphic()) return;
+    if (!validGraphic()) {
+      showMessageError('Preencha os campos');
+      return;
+    }
     const user = await Storage.getItem('user');
     const graphicPost = {
       ...graphic,
       borda: graphic.borda || 1,
       idUsuario: Number(user.UserId),
       tipoGrafico: graphic.tipoGrafico || 1,
-      cor: graphic.cor ? graphic.cor.replace('#', '') : ''
+      cor: graphic.cor && graphic.tipoGrafico === 1 ? graphic.cor.replace('#', '') : ''
     };
 
     try {
       await GraphicService.saveGraphic(graphicPost);
       navigation.goBack();
-      EventBus.notify('reloadGraphics');
+      if (onRefresh) onRefresh(!route.params.activeGraphic);
     } catch (e) {
+      showMessageError('Dados inválidos');
       console.log(e);
     }
   };
@@ -85,7 +98,7 @@ export default function GraphicPage({ navigation, route }) {
         contentContainerStyle={{ alignItems: 'center', flexGrow: 1 }}
       >
         <View style={styles.wrapper}>
-          <View style={styles.wrapperInput}>
+          <View style={[styles.wrapperInput, { zIndex: 2 }]}>
             <Text style={styles.textInput}>Tipo de gráfico:</Text>
             <Dropdown
               items={items}
@@ -120,6 +133,7 @@ export default function GraphicPage({ navigation, route }) {
                 valores: removeValue(index, graphic.valores)
               })
               }
+              keyboardType="numeric"
               placeholder="Novo valor"
             />
           </View>

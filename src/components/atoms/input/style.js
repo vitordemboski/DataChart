@@ -18,8 +18,7 @@ export default StyleSheet.create({
     color: $gray3A,
     flex: 1,
     fontFamily: 'ZillaSlab_400Regular',
-    fontSize: 15,
-    lineHeight: 22
+    fontSize: 15
   },
   icon: {
     marginRight: 10

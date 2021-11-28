@@ -1,11 +1,11 @@
-import React, { forwardRef } from 'react';
+import React, { forwardRef, useMemo } from 'react';
 import {
   Dimensions, View, Text, ActivityIndicator
 } from 'react-native';
 import { LineChart, PieChart, BarChart } from 'react-native-chart-kit';
 import { $background, $gray3A } from '@modules/colors';
 import styles from './style';
-import { getHexColorGraphic, getHexToRgbColor } from '../../../modules/utils';
+import { getHexColorGraphic, getHexToRgbColor, getRandomColor } from '../../../modules/utils';
 
 const { height, width } = Dimensions.get('window');
 
@@ -24,11 +24,42 @@ const getGraphicByType = (tipo) => {
 
 const Graphic = ({ graphic, loadingShare }, ref) => {
   if (!graphic?.id) return <View style={styles.container} />;
-
   const color = getHexColorGraphic(graphic.cor);
 
   const GraphicElement = getGraphicByType(graphic.tipoGrafico);
-  const rgb = getHexToRgbColor(color);
+
+  const campos = graphic.campos.split(',');
+  const valores = graphic.valores.split(',');
+
+  const isLineChart = graphic.tipoGrafico === 1;
+  const isPieChart = graphic.tipoGrafico === 4;
+
+  const rgb = getHexToRgbColor(isLineChart ? color : $gray3A);
+  const data = useMemo(() => {
+    if (isPieChart) {
+      return campos.map((item, index) => ({
+        name: item,
+        value: parseFloat(valores[index]),
+        color: getRandomColor(),
+        legendFontColor: $gray3A,
+        legendFontSize: 12
+      }));
+    }
+    return {
+      labels: campos,
+      datasets: [
+        {
+          data: valores
+        }
+      ]
+    };
+  }, [graphic]);
+
+  let heightGraphic = height / (loadingShare ? 2.5 : 1.9);
+
+  if (isPieChart) {
+    heightGraphic = 220;
+  }
 
   return (
     <View style={styles.container}>
@@ -37,7 +68,7 @@ const Graphic = ({ graphic, loadingShare }, ref) => {
           <Text
             style={{
               position: 'absolute',
-              top: 15,
+              top: isPieChart ? 8 : 15,
               zIndex: 20,
               width: width - 24,
               textAlign: 'center',
@@ -48,16 +79,10 @@ const Graphic = ({ graphic, loadingShare }, ref) => {
           </Text>
         )}
         <GraphicElement
-          data={{
-            labels: graphic.campos.split(','),
-            datasets: [
-              {
-                data: graphic.valores.split(',')
-              }
-            ]
-          }}
+          data={data}
           width={width - 24}
-          height={height / (loadingShare ? 2.5 : 1.9)}
+          height={heightGraphic}
+          absolute
           chartConfig={{
             backgroundColor: $background,
             backgroundGradientFrom: $background,
@@ -72,6 +97,7 @@ const Graphic = ({ graphic, loadingShare }, ref) => {
               stroke: color
             }
           }}
+          accessor="value"
           bezier
           style={[styles.graphic, { paddingTop: loadingShare ? 60 : 0 }]}
         />
@@ -81,7 +107,7 @@ const Graphic = ({ graphic, loadingShare }, ref) => {
           style={{
             backgroundColor: '#CCC',
             position: 'absolute',
-            width: '90%',
+            width: '93%',
             height: '85%',
             zIndex: 25,
             alignItems: 'center',

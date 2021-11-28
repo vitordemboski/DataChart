@@ -12,6 +12,7 @@ import PageInput from '@components/templates/page-input';
 import UserService from '@modules/api/api-user';
 
 import styles from './style';
+import { showMessageError } from '../../../modules/utils';
 
 export default function SignUp({ navigation }) {
   const [email, setEmail] = useState('');
@@ -25,7 +26,10 @@ export default function SignUp({ navigation }) {
   };
 
   const handleSubmit = async () => {
-    if (!email || !password || !firstName || !lastName) return;
+    if (!email || !password || !firstName || !lastName) {
+      showMessageError('Preencha os campos');
+      return;
+    }
     setLoading(true);
     try {
       await UserService.signUp({
@@ -36,9 +40,10 @@ export default function SignUp({ navigation }) {
       });
       setLoading(false);
       navigation.navigate('SignIn', { email, password });
-    } catch (error) {
+    } catch (e) {
+      showMessageError('Dados inválidos');
       setLoading(false);
-      console.log(error);
+      console.log(e);
     }
   };
 

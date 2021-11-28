@@ -2,17 +2,18 @@ import React from 'react';
 import { Text, View, TouchableOpacity } from 'react-native';
 import Logo from '@components/atoms/logo';
 import Storage from '@modules/services/storage';
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation, StackActions } from '@react-navigation/native';
 import styles from './style';
 import Icon from '../../atoms/icon';
 import { $primaryColor } from '../../../modules/colors';
 
 const Header = ({ style, isLogout }) => {
-  const { navigate, goBack } = useNavigation();
+  const { goBack, dispatch } = useNavigation();
 
   const onLogout = () => {
     Storage.removeItem('user');
-    navigate('Welcome');
+    dispatch(StackActions.popToTop());
+    dispatch(StackActions.replace('Welcome'));
   };
 
   const onGoBack = () => {

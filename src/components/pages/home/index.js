@@ -23,35 +23,49 @@ import { $primaryColor } from '../../../modules/colors';
 export default function Home({ navigation }) {
   const [graphics, setGraphics] = useState([]);
   const [activeGraphic, setActiveGraphic] = useState({});
-  const [indexGraphic, setIndexGraphic] = useState(0);
+  const [idLastGraphic, setIdLastGraphic] = useState();
   const [loadingShare, setLoadingShare] = useState(false);
 
   const graphicRef = useRef();
 
   useEffect(() => {
     loadGraphics();
-    EventBus.subscribe('reloadGraphics', loadGraphics);
-
-    return () => EventBus.unsubscribe('reloadGraphics', loadGraphics);
   }, []);
 
-  const loadGraphics = async () => {
-    try {
-      const { data } = await GraphicService.getGraphics();
-      setGraphics(data);
-      if (data.length) {
-        setActiveGraphic(data[indexGraphic < 0 ? 0 : indexGraphic]);
-      } else setActiveGraphic();
-    } catch (e) {
-      console.log(e.message);
+  const setActiveGraphicById = (array, isNew) => {
+    if (isNew) {
+      setActiveGraphic(array[array.length - 1]);
+      setActiveGraphicById(array[array.length - 1].id);
+      return;
     }
+    if (idLastGraphic) {
+      const item = array.filter(a => a.id === idLastGraphic)[0];
+      if (item) {
+        setActiveGraphic(item);
+      } else setActiveGraphic(array[0]);
+    } else setActiveGraphic(array[0]);
   };
+
+  const loadGraphics = useCallback(
+    async (isNew) => {
+      try {
+        const { data } = await GraphicService.getGraphics();
+        setGraphics(data);
+        if (data.length) {
+          setActiveGraphicById(data, isNew);
+        } else setActiveGraphic({});
+      } catch (e) {
+        console.log(e.message);
+      }
+    },
+    [idLastGraphic]
+  );
 
   const onClickAdd = () => {
-    navigation.navigate('Graphic');
+    navigation.navigate('Graphic', { onRefresh: loadGraphics });
   };
 
-  const onRemove = useCallback(async (data, index) => {
+  const onRemove = useCallback(async (data) => {
     try {
       Alert.alert('', 'Você realmente deseja deletar esse gráfico ?', [
         { text: 'Não' },
@@ -59,7 +73,6 @@ export default function Home({ navigation }) {
           text: 'Sim',
           onPress: async () => {
             await GraphicService.removeGraphic(data);
-            if (index === indexGraphic) setIndexGraphic(indexGraphic - 1);
             loadGraphics();
           }
         }
@@ -70,13 +83,12 @@ export default function Home({ navigation }) {
   }, []);
 
   const onEdit = () => {
-    setIndexGraphic();
-    navigation.navigate('Graphic', { activeGraphic });
+    navigation.navigate('Graphic', { activeGraphic, onRefresh: loadGraphics });
   };
 
-  const onClickGraphic = (item, i) => {
+  const onClickGraphic = (item) => {
     setActiveGraphic(item);
-    setIndexGraphic(i);
+    setIdLastGraphic(item.id);
   };
 
   return (

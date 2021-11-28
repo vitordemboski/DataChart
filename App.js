@@ -15,6 +15,7 @@ import {
 } from '@expo-google-fonts/zilla-slab';
 import { configureFontWeight } from '@modules/utils';
 import AppLoading from 'expo-app-loading';
+import FlashMessage from 'react-native-flash-message';
 import AppContainer from './src/router';
 
 function App() {
@@ -40,7 +41,12 @@ function App() {
   if (!fontsLoaded) {
     return <AppLoading />;
   }
-  return <AppContainer />;
+  return (
+    <>
+      <AppContainer />
+      <FlashMessage position="top" />
+    </>
+  );
 }
 
 export default App;

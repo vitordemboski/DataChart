@@ -1,9 +1,29 @@
 /* eslint-disable no-bitwise */
 import React from 'react';
 import { Platform, Text } from 'react-native';
+import { showMessage } from 'react-native-flash-message';
 
 export const isiOS = Platform.OS === 'ios';
 export const isAndroid = Platform.OS === 'android';
+
+export const getRandomColor = () => {
+  const letters = '0123456789ABCDEF'.split('');
+  let color = '#';
+  // eslint-disable-next-line no-plusplus
+  for (let i = 0; i < 6; i++) {
+    color += letters[Math.floor(Math.random() * 16)];
+  }
+  return color;
+};
+
+export const showMessageError = (message) => {
+  showMessage({
+    message: 'Ocorreu um erro!',
+    description: message,
+    type: 'danger',
+    duration: 2000
+  });
+};
 
 export const getDescriptionGraphic = (tipo) => {
   switch (tipo) {
