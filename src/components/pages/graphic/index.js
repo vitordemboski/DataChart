@@ -5,7 +5,6 @@ import ColorPicker from 'react-native-wheel-color-picker';
 import GraphicService from '@modules/api/api-graphic';
 
 import Storage from '@modules/services/storage';
-import EventBus from '@modules/services/EventBus';
 
 import PageInput from '@components/templates/page-input';
 

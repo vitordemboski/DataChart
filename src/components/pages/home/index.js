@@ -5,8 +5,6 @@ import {
   FlatList, View, Text, TouchableOpacity, Alert
 } from 'react-native';
 
-import EventBus from '@modules/services/EventBus';
-
 import GraphicService from '@modules/api/api-graphic';
 
 import GraphicItem from '@components/molecules/graphic-item';
@@ -32,10 +30,10 @@ export default function Home({ navigation }) {
     loadGraphics();
   }, []);
 
-  const setActiveGraphicById = (array, isNew) => {
+  const setActiveGraphicById = useCallback((array, isNew) => {
     if (isNew) {
       setActiveGraphic(array[array.length - 1]);
-      setActiveGraphicById(array[array.length - 1].id);
+      setIdLastGraphic(array[array.length - 1].id);
       return;
     }
     if (idLastGraphic) {
@@ -44,7 +42,7 @@ export default function Home({ navigation }) {
         setActiveGraphic(item);
       } else setActiveGraphic(array[0]);
     } else setActiveGraphic(array[0]);
-  };
+  }, [idLastGraphic]);
 
   const loadGraphics = useCallback(
     async (isNew) => {
@@ -97,7 +95,7 @@ export default function Home({ navigation }) {
         <Text numberOfLines={2} style={styles.title}>
           {activeGraphic?.titulo}
         </Text>
-        {activeGraphic.titulo && (
+        {activeGraphic && activeGraphic.titulo && (
           <View style={styles.headerRight}>
             <ShareGraphic
               viewRef={graphicRef}

@@ -8,6 +8,6 @@ export default StyleSheet.create({
   viewContainer: { zIndex: 1 },
   androidContainer: {
     minHeight: 500,
-    marginBottom: -428
+    marginBottom: -340
   }
 });

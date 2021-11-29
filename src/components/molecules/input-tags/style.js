@@ -17,7 +17,7 @@ export default StyleSheet.create({
   },
   input: {
     flex: 1,
-    minWidth: 80,
+    minWidth: 90,
     fontFamily: 'ZillaSlab_400Regular'
   },
   buttonPlus: {
